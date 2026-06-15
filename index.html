@@ -1,235 +1,358 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flexzy Games</title>
-<!-- Imagen que se verá en la pestaña -->
-  <link rel="icon" type="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCDbu14OpgVUatd8GorxZl5C-9MZlJyK7BJDWCxRv0RQ&s=80" href="foto.png">
-  
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flexzy Games</title>
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 
-    body {
-        background: linear-gradient(rgba(0, 15, 25, 0.85), rgba(0, 10, 20, 0.9)),
-      url('9oADAMBAAIRAxEAPwD85KDCj0XllDgQ4RSWIpZOLBhQgoUGFEzShQYULJFBKEUoqQiysKDChBRUikFCgwoWVKDFiBxkikKQwkGixFIVGRJkqpQWZGScjCgwo5XpFDgQoRTUShjJQoMKEFCgwomaUKDChZKFBiwinCGKWShQYsIKEMKEFCgQoQUWIqBRRhQhYsFUyTIySsjJKjIkzIyLkosGFHK9EocCHCChQYsUZOLBhQg4sGFCyUKDChBQoMIs0oQwoQsKCsTJrBiwinFgrCDiwYpBQoC6gbJraUTajILrajJMzJqSsOsC5OFAhRyvQOFAhQh6RYMIslCgQoQcWDChBQoMKFkoUCFCDhQIUTJLEUgoQQoQUUYUIKLBWVAlGVSCXRZItXRZAtbRZJdZESVkZFykKBCjlegcKBChBwoEOFkosGFCCKDFiZOFAhQgocCLCycKDFIpxRiwgoUoxYgUWDFINQhaQS6CoHraOtpBto62pEw62pEmpqakWsOsk5YoKxyvQOLBhQgocecOEGsGLCycWDCiBQoEIg4sGFCyUKBChBSlBWVA1CUiyUXRVIlHV0gpVBdQwlHW0otZNZBWRkl1k1NSVk1EXMxUiuV3lCgQoQUOPOHCycIIUIKFAhEEUCFEycKBFhBwoEUg4QRZSDlWUV1A4oSrKWSXRVItXQXSCUdbUi1tHV1JdbU1tSVE1tSVQ1UnNQoEKOZ3qUFYWTWDChBQ5XnClIplBlVMlCgFCClKAUpBQgKVAoUoKQcqgUpBaso6qB6uhq6QTDq6gTamskuroskWpqMkusjJKyayTm4UAo53cUUYRBQgKVAoUCFKQcKV5ylKWTijFhBxRWVA5VApSClKUIuoGuhKpByroSrqB6oaulYWro6yB62iyBauhraketoa2pFraOskWojJOdlKAUc7uKFAhQglgxSDiwJSiZOFKEWEPSLAlKEFCBdIOVQiyoHKsorpBLoyrqBaujq6kWroaukHraLageto62pHraGtpR62jqaEepo62pFrBrJPgrBivg7ShQJSIKFAiyoEUorCChBKUqZIpQ1ZSHorzlKUg1GVSCXR1kjXQ0tILV0F1Al0dbUD1tHWSPWHW1LC1tHW1AtbR1tSLWHW1ImHWRfBhRmfF1qUrMkqxmLJSqzIKsrMQSxmIWVZWZApV1mIVWZBdVGKXV1mQVdZkm1dZkG1tVim1tZkm1tZkm1NZkm1mYJ=80') center/cover no-repeat fixed;
-      color: #fff;
-      font-family: 'Press Start 2P', cursive;
-      text-align: center;
-      min-height: 100vh;
-      padding: 40px 20px;
-      overflow-x: hidden;
-    }
+html, body{
+    height:100%;
+}
 
-    h1 {
-      font-size: 4rem;
-      margin-bottom: 70px;
-      color: #00ffcc;
-      text-shadow: 0 0 25px #00ffcc;
-    }
+body{
+    margin:0;
+    min-height:100vh;
+    background: radial-gradient(circle at top,
+        #001a1f,
+        #1b5669 60%,
+        #050505);
+    color:#e0e0e0;
+    font-family:'Orbitron',sans-serif;
+    text-align:center;
+}
 
-    .main-btn {
-      background: #00ffcc;
-      border: 5px solid #00ffff;
-      padding: 25px 90px;
-      font-size: 2rem;
-      cursor: pointer;
-      border-radius: 20px;
-    }
+/* ===== LOADING SCREEN ===== */
+#loadingScreen{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
 
-    .games-screen { display: none; }
-    .games-screen.active { display: block; }
+    background: radial-gradient(circle at top,
+        #000000,
+        #182a74 60%,
+        #000000);
+}
 
-    .games-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      max-width: 1000px;
-      margin: auto;
-    }
+/* animated background */
+#loadingScreen::before{
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background:linear-gradient(45deg,#00ffcc22,#00aaff22,#ff00ff22);
+    animation:moveBg 6s linear infinite;
+}
 
-    .game-card {
-      width: 140px;
-      height: 140px;
-      border-radius: 16px;
-      border: 3px solid #00ffcc;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: 0.3s;
-    }
+@keyframes moveBg{
+    0%{transform:translate(-25%,-25%) rotate(0deg);}
+    100%{transform:translate(-25%,-25%) rotate(360deg);}
+}
 
-    .game-card:hover {
-      transform: scale(1.1);
-      border-color: #00ffff;
-    }
+.logo{
+    font-size:46px;
+    letter-spacing:6px;
+    color:#00fff0;
+    text-shadow:
+        0 0 10px #00fff0,
+        0 0 25px #00ff88,
+        0 0 35px #0088ff;
+    z-index:2;
+}
 
-    .game-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.75);
-    }
+/* BAR */
+.loading-bar{
+    width:75%;
+    height:35px;
+    margin-top:40px;
+    background:#111;
+    border:3px solid #00fff0;
+    border-radius:30px;
+    overflow:hidden;
+    z-index:2;
+    box-shadow:0 0 25px #00fff0;
+}
 
-    .game-title {
-      position: absolute;
-      bottom: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #00ffff;
-      font-size: 0.7rem;
-      text-shadow: 0 0 10px #00ffff;
-    }
+/* PROGRESS */
+.progress{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#00ff88,#00e5ff);
+    box-shadow:0 0 20px #00e5ff;
+}
 
-    .game-area { display: none; }
-    .game-area.active { display: block; }
+/* TEXT */
+.subtitle{
+    margin-top:20px;
+    font-size:14px;
+    color:#aaa;
+    letter-spacing:3px;
+    z-index:2;
+    animation:blink 1.5s infinite;
+}
 
-    iframe {
-      width: 100%;
-      height: 720px;
-      border: 6px solid #00ffff;
-      border-radius: 20px;
-    }
+@keyframes blink{
+    50%{opacity:0.4;}
+}
 
-    button {
-      margin-top: 20px;
-      padding: 15px 40px;
-      font-family: 'Press Start 2P';
-      background: #00ffcc;
-      border: none;
-      cursor: pointer;
-      border-radius: 10px;
-      margin-right: 10px;
-    }
+/* ===== MAIN ===== */
 
-  </style>
+h1{
+    color:#d0d0d0;
+    text-shadow:0 0 10px #888;
+    margin:30px 0;
+}
+
+.sidebar{
+    position:fixed;
+    left:15px;
+    top:50%;
+    transform:translateY(-50%);
+    width:220px;
+}
+
+#searchGames,
+.menu-btn{
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    border-radius:10px;
+    border:2px solid #666;
+    background:#1a1a1a;
+    color:#d9d9d9;
+    box-shadow:0 0 12px #555;
+    font-family:'Orbitron',sans-serif;
+}
+
+.menu-btn{
+    cursor:pointer;
+}
+
+.games-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content:center;
+    margin-left:260px;
+    padding:20px;
+}
+
+.game-card{
+    width:150px;
+    height:150px;
+    border:2px solid #666;
+    border-radius:12px;
+    overflow:hidden;
+    position:relative;
+    cursor:pointer;
+}
+
+.game-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.game-title{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    background:rgba(0,0,0,.75);
+    color:#ddd;
+}
+
+#gameArea{
+    display:none;
+    padding:20px;
+}
+
+iframe{
+    width:95%;
+    height:700px;
+    border:2px solid #666;
+}
+
+.play-btn{
+    padding:12px 20px;
+    background:#1a1a1a;
+    color:#ddd;
+    border:2px solid #666;
+    box-shadow:0 0 12px #555;
+    font-family:'Orbitron',sans-serif;
+    cursor:pointer;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- MAIN -->
-  <div id="mainScreen">
-    <h1>Flexzy Games</h1>
-    <button class="main-btn" onclick="showGames()">PLAY</button>
-  </div>
+<!-- LOADING -->
+<div id="loadingScreen">
+    <h1 class="logo">FLEXZY GAMES</h1>
 
-  <!-- GAMES -->
-  <div id="gamesScreen" class="games-screen">
-
-    <div class="games-grid">
-
-      <div class="game-card" onclick="loadGame('PROXY','https://676719.github.io/Proxyhack/')">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiqfVKfK_mS3_i7M60lo5QwK4XgqnlDuv3iA&s=80">
-        <div class="game-title">PROXY</div>
-      </div>
-
-      <div class="game-card" onclick="loadGame('Racing','https://slope2unblocked.github.io/')">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr8t8oHw_gcbhKQH4tco63NPe6Jaf0OaueNg&s=80">
-      </div>
-
-      <div class="game-card" onclick="loadGame('Shooter','https://1v1lol-unblocked.bitbucket.io/')">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbkEhpMuX8FeOg_oipY-8bFO-WHOeKf-EKNw&s=80">
-      </div>
-
-      <div class="game-card" onclick="loadGame('Arcade','https://geometrydashunblocked.github.io/')">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsm4r9Bs9GM0T1KdFWR__VOqVlVo9Hl4sstA&s=80">
-      </div>
-
-      <div class="game-card" onclick="loadGame('Parkour','https://slopegame.io/')">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMS4qFKdKWJ9B4O8yGe_bkf4dIEZ5AspDRCA&s=80">
-      </div>
-
-      <div class="game-card" onclick="loadGame('Driving','https://www.friv.com/')">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH-yYe1srohrExBbwW8rssSsqU2Lw7n-4CSg&s=80">
-      </div>
-
-      <div class="game-card" onclick="loadGame('Action','https://krunker.io/')">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZySam2BRYGssXMjfof1UJI1PaQ7stjjuOxfI4hbnf&s=80">
-      </div>
-
-      <div class="game-card" onclick="loadGame('Sandbox','https://sandboxels.r74n.com/')">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjGZQRaU_o1KtwvC4bCmDLbE2b0sL_lr7iIA&s=80">
-      </div>
-      
-      <div class="game-card" onclick="loadGame('FIRE ANDE WATER','https://html5.gamedistribution.com/a55c9cc9c21e4fc683c8c6857f3d0c75/?utm_source=gameforge.com&utm_medium=fireboy-and-watergirl-1-forest-temple&utm_campaign=block-and-redirect')">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0QJ-6XJmvNDQk9sODGU8_u_w_hKuWNvVIOCBFYflbLw&s=80">
-      </div>
-
+    <div class="loading-bar">
+        <div class="progress"></div>
     </div>
 
-    <button onclick="backToMain()">← VOLVER AL INICIO</button>
-  </div>
+    <div class="subtitle">Loading...</div>
+</div>
 
-  <!-- GAME -->
-  <div id="gameArea" class="game-area">
-    <h2 id="gameTitle" style="color:#00ffcc;"></h2>
-    <iframe id="gameFrame"></iframe>
+<!-- MAIN -->
+<div id="homeScreen">
 
-    <!-- BOTONES NUEVOS -->
-    <div>
-      <button onclick="backToGames()">← VOLVER A JUEGOS</button>
-      <button onclick="openFullScreen()">FULL SCREN</button>
-      <button onclick="backToMain()">🏠 INICIO</button>
-    </div>
-  </div>
+<div class="sidebar">
+    <input type="text" id="searchGames" placeholder="Buscar juego..." onkeyup="searchGames()">
 
-  <script>
-    let currentUrl = '';
+    <button class="menu-btn" onclick="showCategory('game')">Juegos</button>
+    <button class="menu-btn" onclick="showCategory('proxy')">Proxy</button>
+</div>
 
-    function showGames() {
-      document.getElementById('mainScreen').style.display = 'none';
-      document.getElementById('gamesScreen').classList.add('active');
-    }
+<h1>Flexzy Games</h1>
 
-    function loadGame(title, url) {
-      currentUrl = url;
+<div class="games-grid">
 
-      document.getElementById('gamesScreen').classList.remove('active');
-      document.getElementById('gameArea').classList.add('active');
+<!-- PROXYS -->
+<div class="game-card" data-category="proxy" onclick="loadGame('PROXY','https://676719.github.io/Proxyhack/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMO6g2UHi9xr_Fth2Xibij4znp9BkdUKT-EQ&s=80">
+<div class="game-title">PROXY</div>
+</div>
 
-      document.getElementById('gameTitle').textContent = title;
-      document.getElementById('gameFrame').src = url;
-    }
+<div class="game-card" data-category="proxy" onclick="loadGame('BlockAway','https://blockaway.net/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhPmDrx5R_NzKTs0H6tVlybms-68Kni6L8bGRmNMMYBA&s=80">
+<div class="game-title">BLOCK AWAY</div>
+</div>
 
-    function backToGames() {
-      document.getElementById('gameFrame').src = '';
-      document.getElementById('gameArea').classList.remove('active');
-      document.getElementById('gamesScreen').classList.add('active');
-    }
+<div class="game-card" data-category="proxy" onclick="loadGame('ProxySite','https://www.proxysite.com/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTefYGWUbc3kTtMfHfkngvkYV4hBxYrrFB56YpZGDA9ug&s=80">
+<div class="game-title">PROXY SITE</div>
+</div>
 
-    function backToMain() {
-      document.getElementById('gameFrame').src = '';
-      document.getElementById('gameArea').classList.remove('active');
-      document.getElementById('gamesScreen').classList.remove('active');
-      document.getElementById('mainScreen').style.display = 'block';
-    }
+<div class="game-card" data-category="proxy" onclick="loadGame('Croxyproxy','https://www.croxyproxy.com/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVxepYYdLtoHUFLAAFHDdDTPWxBa7aYjgfOc2DNXZ0&s=80">
+<div class="game-title">Croxyproxy</div>
+</div>
 
-    function openFullScreen() {
-      if (!currentUrl) return;
+<!-- JUEGOS -->
+<div class="game-card" data-category="game" onclick="loadGame('Slope','https://slopegame.io/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbkEhpMuX8FeOg_oipY-8bFO-WHOeKf-EKNw&s=80">
+<div class="game-title">Games 1</div>
+</div>
 
-      const win = window.open("about:blank", "_blank");
+<div class="game-card" data-category="game" onclick="loadGame('Krunker','https://krunker.io/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuP1rjOK4v52JzwaO1glUgA03sTA9viyOoOw&s=80">
+<div class="game-title">Shooting</div>
+</div>
 
-      win.document.write(`
-        <html>
-          <head>
-            <title>FULL SCREN</title>
-            <style>
-              body,html{margin:0;padding:0;height:100%;overflow:hidden;background:black;}
-              iframe{width:100%;height:100%;border:none;}
-            </style>
-          </head>
-          <body>
-            <iframe src="${currentUrl}" allowfullscreen></iframe>
-          </body>
-        </html>
-      `);
+<div class="game-card" data-category="game" onclick="loadGame('2D Shooting','https://battledudes.io/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUYn9BckeYwm_DS4a1w-o3MH4lsfjlRCwd6g&s=80">
+<div class="game-title">2D Shooting</div>
+</div>
 
-      win.document.close();
-    }
-  </script>
+<div class="game-card" data-category="game" onclick="loadGame('Paper.io 3D','https://paperio.site/3d/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkMru2PDO_cZcXdyuB15sADiOj1ZYHgWHGLQ&s=80">
+<div class="game-title">Paper.io 3D</div>
+</div>
+
+<div class="game-card" data-category="game" onclick="loadGame('ROCKET','https://rocketgoal.io/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFnNvoMuBTDqyXW9n6uN5pGvdLUUniTk7IJA&s=80">
+<div class="game-title">ROCKET GOAL</div>
+</div>
+
+  <div class="game-card" data-category="game" onclick="loadGame('FNAF','https://fnaffree.io/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCET8SQgYmNnN8jAnf_5C8H_SPE_97PZf2z69fLM7B&s=80">
+<div class="game-title">FNAF</div>
+</div>
+
+  <div class="game-card" data-category="game" onclick="loadGame('1v1LOL','https://1v1-lol.gitlab.io/')">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKN6F4_x-ZFPLH0XLZ8-EbUYP97IQVBMaI-J-bwlotoA&s=80">
+<div class="game-title">1v1LOL</div>
+</div>
+
+  
+</div>
+</div>
+
+<!-- GAME AREA -->
+<div id="gameArea">
+<h2 id="gameTitle"></h2>
+<iframe id="gameFrame"></iframe><br><br>
+<button class="play-btn" onclick="backToGames()">← Volver</button>
+</div>
+
+<script>
+function loadGame(title,url){
+ document.getElementById('homeScreen').style.display='none';
+ document.getElementById('gameArea').style.display='block';
+ document.getElementById('gameTitle').textContent=title;
+ document.getElementById('gameFrame').src=url;
+}
+
+function backToGames(){
+ document.getElementById('gameArea').style.display='none';
+ document.getElementById('homeScreen').style.display='block';
+ document.getElementById('gameFrame').src='';
+}
+
+function searchGames(){
+ const input=document.getElementById('searchGames').value.toLowerCase();
+ document.querySelectorAll('.game-card').forEach(card=>{
+   const title=card.querySelector('.game-title').textContent.toLowerCase();
+   card.style.display=title.includes(input)?'block':'none';
+ });
+}
+
+function showCategory(type){
+ const cards = document.querySelectorAll('.game-card');
+
+ cards.forEach(card=>{
+   const category = card.dataset.category;
+
+   if(type === 'game'){
+     card.style.display = category === 'game' ? 'block' : 'none';
+   }
+   else if(type === 'proxy'){
+     card.style.display = category === 'proxy' ? 'block' : 'none';
+   }
+ });
+}
+
+/* LOADING 7s */
+window.onload = function(){
+
+ let progress = 0;
+ const bar = document.querySelector('.progress');
+
+ const duration = 7000;
+ const intervalTime = 50;
+ const steps = duration / intervalTime;
+ const increment = 100 / steps;
+
+ const interval = setInterval(()=>{
+   progress += increment;
+   bar.style.width = progress + '%';
+
+   if(progress >= 100){
+     clearInterval(interval);
+
+     setTimeout(()=>{
+       document.getElementById('loadingScreen').style.display='none';
+       showCategory('game');
+     },300);
+   }
+ }, intervalTime);
+
+};
+</script>
 
 </body>
 </html>
