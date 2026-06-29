@@ -7,180 +7,320 @@
 <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQinrgDHdWZEEf2uPgWb0Xf71PLYzJi_IGr-xjrvaTSBg&s">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
 
-html, body{
-    height:100%;
+* {
+    box-sizing: border-box;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-body{
-    margin:0;
-    min-height:100vh;
-    background: radial-gradient(circle at top,
-        #001a1f,
-        #1b5669 60%,
-        #050505);
-    color:#e0e0e0;
-    font-family:'Orbitron',sans-serif;
-    text-align:center;
+html, body {
+    height: 100%;
+    margin: 0;
+    scroll-behavior: smooth;
 }
 
-/* LOADING */
-#loadingScreen{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-    background: radial-gradient(circle at top,#000,#182a74 60%,#000);
+body {
+    min-height: 100vh;
+    /* Fondo Cyberpunk con rejilla sutil de líneas */
+    background: 
+        radial-gradient(circle at top, rgba(0, 242, 254, 0.15), transparent 60%),
+        radial-gradient(circle at center, #0b0f19 0%, #05070c 100%);
+    background-color: #05070c;
+    color: #f1f5f9;
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    overflow-x: hidden;
 }
 
-#loadingScreen::before{
-    content:"";
-    position:absolute;
-    width:200%;
-    height:200%;
-    background:linear-gradient(45deg,#00ffcc22,#00aaff22,#ff00ff22);
-    animation:moveBg 6s linear infinite;
+/* LOADING SCREEN */
+#loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    background: radial-gradient(circle at center, #090d16 0%, #020408 100%);
 }
 
-@keyframes moveBg{
-    0%{transform:translate(-25%,-25%) rotate(0deg);}
-    100%{transform:translate(-25%,-25%) rotate(360deg);}
+#loadingScreen::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, rgba(0, 255, 240, 0.05), rgba(139, 92, 246, 0.05), rgba(236, 72, 153, 0.05));
+    animation: moveBg 8s linear infinite;
 }
 
-.logo{
-    font-size:46px;
-    letter-spacing:6px;
-    color:#00fff0;
-    text-shadow:0 0 10px #00fff0,0 0 25px #00ff88,0 0 35px #0088ff;
+@keyframes moveBg {
+    0% { transform: translate(-25%, -25%) rotate(0deg); }
+    100% { transform: translate(-25%, -25%) rotate(360deg); }
 }
 
-.loading-bar{
-    width:75%;
-    height:35px;
-    margin-top:40px;
-    background:#111;
-    border:3px solid #00fff0;
-    border-radius:30px;
-    overflow:hidden;
-    box-shadow:0 0 25px #00fff0;
+.logo {
+    font-size: 54px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: #00f2fe;
+    text-shadow: 0 0 15px rgba(0, 242, 254, 0.6), 0 0 30px rgba(139, 92, 246, 0.4);
+    margin: 0;
 }
 
-.progress{
-    height:100%;
-    width:0%;
-    background:linear-gradient(90deg,#00ff88,#00e5ff);
+.loading-bar {
+    width: 60%;
+    max-width: 500px;
+    height: 14px;
+    margin-top: 40px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+    padding: 2px;
 }
 
-.subtitle{
-    margin-top:20px;
-    font-size:14px;
-    color:#aaa;
+.progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00f2fe, #4facfe);
+    border-radius: 20px;
+    box-shadow: 0 0 10px #00f2fe;
 }
 
-/* MAIN */
-h1{
-    margin:30px 0;
-    text-shadow:0 0 10px #888;
+.subtitle {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #64748b;
+    letter-spacing: 2px;
 }
 
-.sidebar{
-    position:fixed;
-    left:15px;
-    top:50%;
-    transform:translateY(-50%);
-    width:220px;
+/* MAIN COMPONENTS */
+h1.main-title {
+    margin: 40px 0 20px 260px;
+    font-size: 3.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
-#searchGames,
-.menu-btn{
-    width:100%;
-    padding:12px;
-    margin-bottom:10px;
-    border-radius:10px;
-    border:2px solid #666;
-    background:#1a1a1a;
-    color:#d9d9d9;
-    box-shadow:0 0 12px #555;
-    font-family:'Orbitron',sans-serif;
+/* SIDEBAR MODERNA (Glassmorphism) */
+.sidebar {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 240px;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 25px 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    z-index: 100;
 }
 
-.menu-btn{
-    cursor:pointer;
+#searchGames {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    outline: none;
+    font-size: 0.9rem;
 }
 
-.games-grid{
-    display:flex;
-    flex-wrap:wrap;
-    gap:20px;
-    justify-content:center;
-    margin-left:260px;
-    padding:20px;
+#searchGames:focus {
+    border-color: #00f2fe;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
 }
 
-.game-card{
-    width:150px;
-    height:150px;
-    border:2px solid #666;
-    border-radius:12px;
-    overflow:hidden;
-    position:relative;
-    cursor:pointer;
+.menu-btn {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    color: #94a3b8;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 1px;
 }
 
-.game-card img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.menu-btn:hover {
+    color: #fff;
+    background: linear-gradient(90deg, #00f2fe, #4facfe);
+    border-color: transparent;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+    transform: scale(1.03);
 }
 
-.game-title{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    background:rgba(0,0,0,.75);
-    color:#ddd;
+/* GRID DE JUEGOS RETOCADO */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 25px;
+    margin-left: 290px;
+    margin-right: 40px;
+    padding: 20px 0;
 }
 
-#gameArea{
-    display:none;
-    padding:20px;
+/* TARJETAS DE JUEGO GAMER */
+.game-card {
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    aspect-ratio: 1;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-iframe{
-    width:95%;
-    height:700px;
-    border:2px solid #666;
+.game-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, #00f2fe, #4facfe) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
 }
 
-.play-btn{
-    padding:12px 20px;
-    background:#1a1a1a;
-    color:#ddd;
-    border:2px solid #666;
-    box-shadow:0 0 12px #555;
-    font-family:'Orbitron',sans-serif;
-    cursor:pointer;
+.game-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 242, 254, 0.25);
+}
+
+.game-card:hover::after {
+    opacity: 1;
+}
+
+.game-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9);
+}
+
+.game-card:hover img {
+    filter: brightness(1.1);
+}
+
+.game-title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(transparent, rgba(2, 4, 8, 0.95) 40%);
+    color: #fff;
+    padding: 15px 5px 10px 5px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* SECCIÓN DEL JUEGO ACTIVO (IFRAME) */
+#gameArea {
+    display: none;
+    padding: 30px;
+    margin-left: 260px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#gameTitle {
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 25px;
+    text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+}
+
+iframe {
+    width: 95%;
+    max-width: 1100px;
+    height: 650px;
+    border: 2px solid rgba(0, 242, 254, 0.2);
+    border-radius: 20px;
+    background: #000;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.7), 0 0 30px rgba(0, 242, 254, 0.1);
+}
+
+/* BOTONES DEL JUEGO */
+.action-buttons {
+    margin-top: 25px;
+}
+
+.play-btn {
+    padding: 14px 28px;
+    margin: 0 10px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: #f1f5f9;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.play-btn:hover {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    color: #000;
+    border-color: transparent;
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 90%;
+        margin: 20px auto;
+        transform: none;
+        top: 0;
+        left: 0;
+    }
+    h1.main-title, .games-grid, #gameArea {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    h1.main-title {
+        font-size: 2.2rem;
+        text-align: center;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOADING -->
 <div id="loadingScreen">
     <h1 class="logo">FLEXZY GAMES</h1>
     <div class="loading-bar"><div class="progress"></div></div>
-    <div class="subtitle">Loading...</div>
+    <div class="subtitle">INICIANDO SISTEMA...</div>
 </div>
 
-<!-- HOME -->
 <div id="homeScreen">
 
 <div class="sidebar">
@@ -189,11 +329,10 @@ iframe{
     <button class="menu-btn" onclick="showCategory('proxy')">Proxy</button>
 </div>
 
-<h1>Flexzy Games</h1>
+<h1 class="main-title">Flexzy Games</h1>
 
 <div class="games-grid">
 
-<!-- PROXYS -->
 <div class="game-card" data-category="proxy" onclick="loadGame('Proxyhack','https://676719.github.io/Proxyhack/')">
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMO6g2UHi9xr_Fth2Xibij4znp9BkdUKT-EQ&s=80">
 <div class="game-title">PROXYHACK</div>
@@ -214,7 +353,6 @@ iframe{
 <div class="game-title">CROXYPROXY</div>
 </div>
 
-<!-- JUEGOS -->
 <div class="game-card" data-category="game" onclick="loadGame('Slope','https://slopegame.io/')">
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbkEhpMuX8FeOg_oipY-8bFO-WHOeKf-EKNw&s=80">
 <div class="game-title">POKI</div>
@@ -263,13 +401,14 @@ iframe{
 </div>
 </div>
 
-<!-- GAME AREA -->
 <div id="gameArea">
 <h2 id="gameTitle"></h2>
-<iframe id="gameFrame"></iframe><br><br>
+<iframe id="gameFrame" allowfullscreen></iframe>
 
-<button class="play-btn" onclick="backToGames()">← Volver</button>
-<button class="play-btn" onclick="openFullScreen()">Pantalla completa</button>
+<div class="action-buttons">
+    <button class="play-btn" onclick="backToGames()">← Volver</button>
+    <button class="play-btn" onclick="openFullScreen()">Pantalla completa</button>
+</div>
 </div>
 
 <script>
@@ -278,6 +417,7 @@ function loadGame(title,url){
  document.getElementById('gameArea').style.display='block';
  document.getElementById('gameTitle').textContent=title;
  document.getElementById('gameFrame').src=url;
+ window.scrollTo(0,0);
 }
 
 function backToGames(){
@@ -290,7 +430,12 @@ function searchGames(){
  const input=document.getElementById('searchGames').value.toLowerCase();
  document.querySelectorAll('.game-card').forEach(card=>{
    const title=card.querySelector('.game-title').textContent.toLowerCase();
-   card.style.display=title.includes(input)?'block':'none';
+   // Arreglado el bug visual de display block/none rompiendo la grid usando flex/grid nativo de css
+   if(title.includes(input)) {
+       card.style.display = 'block';
+   } else {
+       card.style.display = 'none';
+   }
  });
 }
 
@@ -310,7 +455,7 @@ function openFullScreen(){
  win.document.write(`
  <html>
  <head>
- <title>Full Screen</title>
+ <title>Full Screen | Flexzy Games</title>
  <style>
  html,body{margin:0;height:100%;background:black;}
  iframe{width:100%;height:100%;border:none;}
@@ -336,10 +481,14 @@ window.onload=function(){
 
    if(progress>=100){
      clearInterval(interval);
-     document.getElementById('loadingScreen').style.display='none';
+     document.getElementById('loadingScreen').style.fadeOut = "slow";
+     // Pequeña transición suave para quitar la carga
+     setTimeout(()=>{
+        document.getElementById('loadingScreen').style.display='none';
+     }, 200);
      showCategory('game');
    }
- },50);
+ },30);
 };
 </script>
 
